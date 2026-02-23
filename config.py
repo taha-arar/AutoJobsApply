@@ -1,5 +1,5 @@
 """
-Load configuration from environment. Required: Gmail, Hunter.
+Load configuration from environment. Required: Gmail.
 Telegram optional (report skipped if token or chat_id missing).
 """
 import os
@@ -12,6 +12,8 @@ load_dotenv()
 # Required for sending emails
 GMAIL_USER = os.environ.get("GMAIL_USER", "").strip()
 GMAIL_APP_PASSWORD = os.environ.get("GMAIL_APP_PASSWORD", "").strip()
+
+# Optional: Hunter.io for finding real company emails (fallback: guess jobs@domain)
 HUNTER_API_KEY = os.environ.get("HUNTER_API_KEY", "").strip()
 
 # Optional: Telegram report after each application
@@ -58,8 +60,6 @@ def validate_config() -> None:
         missing.append("GMAIL_USER")
     if not GMAIL_APP_PASSWORD:
         missing.append("GMAIL_APP_PASSWORD")
-    if not HUNTER_API_KEY:
-        missing.append("HUNTER_API_KEY")
     if missing:
         raise SystemExit(
             f"Missing required environment variables: {', '.join(missing)}. "

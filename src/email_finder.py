@@ -1,5 +1,5 @@
 """
-Hunter.io domain-search: get best email for a domain. Prefer hr@, jobs@, careers@, contact@, info@.
+Find contact email for a domain: use Hunter.io when API key is set, else guess jobs@domain.
 """
 import logging
 import time
@@ -10,19 +10,16 @@ import config
 
 logger = logging.getLogger(__name__)
 
-PREFERRED_PREFIXES = ("hr@", "jobs@", "careers@", "contact@", "info@")
 HUNTER_DOMAIN_SEARCH = "https://api.hunter.io/v2/domain-search"
+PREFERRED_PREFIXES = ("hr@", "jobs@", "careers@", "contact@", "info@")
 
 
-def find_email_for_domain(domain: str) -> str | None:
-    """
-    Return one email for the domain, or None. Prefer generic addresses.
-    Rate limit: short delay between calls.
-    """
-    if not domain or not config.HUNTER_API_KEY:
+def _hunter_find(domain: str) -> str | None:
+    """Return one email from Hunter.io or None."""
+    if not config.HUNTER_API_KEY:
         return None
     domain = domain.lower().strip()
-    if " " in domain or "/" in domain:
+    if " " in domain or "/" in domain or "@" in domain:
         return None
     try:
         r = requests.get(
@@ -36,14 +33,12 @@ def find_email_for_domain(domain: str) -> str | None:
         emails = data.get("data", {}).get("emails")
         if not emails or not isinstance(emails, list):
             return None
-        # Prefer generic addresses
         for prefix in PREFERRED_PREFIXES:
             for e in emails:
                 if isinstance(e, dict):
                     addr = (e.get("value") or e.get("email") or "").lower()
                     if addr and addr.startswith(prefix):
                         return addr
-        # Else first valid
         for e in emails:
             if isinstance(e, dict):
                 addr = (e.get("value") or e.get("email") or "").strip()
@@ -54,4 +49,30 @@ def find_email_for_domain(domain: str) -> str | None:
         logger.warning("Hunter domain-search %s failed: %s", domain, e)
         return None
     finally:
-        time.sleep(1.5)  # rate limit
+        time.sleep(1.5)
+
+
+def _guess_email(domain: str) -> str | None:
+    """Return guessed email jobs@domain or None if domain invalid."""
+    if not domain or not isinstance(domain, str):
+        return None
+    domain = domain.lower().strip()
+    if " " in domain or "/" in domain or "@" in domain:
+        return None
+    if len(domain) > 253:
+        return None
+    return f"jobs@{domain}"
+
+
+def find_email_for_domain(domain: str) -> str | None:
+    """
+    Return one email for the domain. Uses Hunter.io when HUNTER_API_KEY is set,
+    otherwise falls back to jobs@domain.
+    """
+    if not domain or not isinstance(domain, str):
+        return None
+    domain = domain.lower().strip()
+    email = _hunter_find(domain)
+    if email:
+        return email
+    return _guess_email(domain)
