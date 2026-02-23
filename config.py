@@ -20,7 +20,7 @@ TELEGRAM_CHAT_ID = os.environ.get("TELEGRAM_CHAT_ID", "").strip()
 
 # Portfolio and motivation letter
 PORTFOLIO_URL = os.environ.get(
-    "PORTFOLIO_URL", "http://taha-arar-portfolio.vercel.app"
+    "PORTFOLIO_URL", "https://taha-arar-portfolio.vercel.app"
 ).strip()
 
 # Cap applications per run (default 10)
