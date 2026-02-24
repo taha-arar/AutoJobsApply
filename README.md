@@ -8,7 +8,7 @@ Automated agent that finds remote Spring Boot/Java developer jobs from 10 source
 - **Up to 10 applications per run** (configurable via `MAX_APPLICATIONS_PER_RUN`)
 - **No duplicate applications**: state stored in `data/applied.json`
 - **Telegram report** after each successful application (title + company + job URL)
-- **Hunter.io** (optional): real company emails; without it we use jobs@domain
+- **Hunter.io** (optional): real company emails; without it we use jobs@domain. When the API key is set, emails are verified with Hunter before sending—only deliverable addresses receive applications, so the per-run cap applies to verified emails only.
 - **Daily run** via GitHub Actions (8:00 AM UTC)
 
 ## Requirements
@@ -67,6 +67,7 @@ Automated agent that finds remote Spring Boot/Java developer jobs from 10 source
 - `src/job_discovery.py` – fetch from all 10 sources, filter, dedupe
 - `src/domain_resolver.py` – company name → domain candidates
 - `src/email_finder.py` – Hunter.io when key set, else jobs@domain
+- `src/email_verifier.py` – Hunter Email Verifier (when key set) before sending
 - `src/email_sender.py` – Gmail SMTP
 - `src/telegram_notifier.py` – Telegram report
 - `src/state.py` – load/save `data/applied.json`

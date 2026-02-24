@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 
 import config
-from src import domain_resolver, email_finder, email_sender, job_discovery, state, telegram_notifier
+from src import domain_resolver, email_finder, email_sender, email_verifier, job_discovery, state, telegram_notifier
 
 logging.basicConfig(
     level=logging.INFO,
@@ -47,6 +47,9 @@ def main() -> None:
         if not to_email:
             logger.info("No email for domain (company: %s), skip", company[:40])
             continue
+        if not email_verifier.is_deliverable(to_email):
+            logger.info("Email not deliverable, skip %s (company: %s)", to_email, company[:40])
+            continue
         ok = email_sender.send_application_email(
             to_email,
             company,
@@ -58,6 +61,7 @@ def main() -> None:
             job.get("position") or job.get("title") or "Spring Boot Developer",
             company,
             job_url,
+            to_email,
         )
         state.append_applied(
             job.get("source", ""),

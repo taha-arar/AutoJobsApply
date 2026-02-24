@@ -9,15 +9,17 @@ import config
 logger = logging.getLogger(__name__)
 
 
-def send_telegram_report(position: str, company: str, job_url: str) -> bool:
+def send_telegram_report(position: str, company: str, job_url: str, to_email: str = "") -> bool:
     """
-    Send one message to the configured Telegram chat: "Applied: [position] @ [company] – [job url]".
+    Send one message to the configured Telegram chat: "Applied: [position] @ [company] – [job url]" plus the used email.
     Returns True on success, False otherwise. Does not raise.
     """
     if not config.TELEGRAM_BOT_TOKEN or not config.TELEGRAM_CHAT_ID:
         logger.debug("Telegram report skipped (token or chat_id not set)")
         return False
     text = f"Applied: {position} @ {company} – {job_url}"
+    if to_email:
+        text += f"\nEmail: {to_email}"
     url = f"https://api.telegram.org/bot{config.TELEGRAM_BOT_TOKEN}/sendMessage"
     try:
         r = requests.post(

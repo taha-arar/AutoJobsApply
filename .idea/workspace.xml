@@ -4,22 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="42bcfc22-68e1-496b-bc5d-458f0577cc25" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.env.example" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.github/workflows/run-agent.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/run_agent.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/domain_resolver.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/email_finder.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/email_sender.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/job_discovery.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/state.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/telegram_notifier.py" afterDir="false" />
-    </list>
+    <list default="true" id="42bcfc22-68e1-496b-bc5d-458f0577cc25" name="Changes" comment="Make Hunter.io optional; fallback to guessing jobs@domain if API key is not provided." />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -88,11 +73,42 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1771843937212</updated>
-      <workItem from="1771843938578" duration="1546000" />
+      <workItem from="1771843938578" duration="4478000" />
     </task>
+    <task id="LOCAL-00001" summary="Initial implementation of job application agent with Gmail, Telegram, and Hunter.io integration.">
+      <option name="closed" value="true" />
+      <created>1771846064781</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1771846064781</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update `.env.example` and `config.py` to use HTTPS for portfolio URL, and add `requirements.txt` for dependencies.">
+      <option name="closed" value="true" />
+      <created>1771846475499</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1771846475499</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Make Hunter.io optional; fallback to guessing jobs@domain if API key is not provided.">
+      <option name="closed" value="true" />
+      <created>1771847604092</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1771847604092</updated>
+    </task>
+    <option name="localTasksCounter" value="4" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial implementation of job application agent with Gmail, Telegram, and Hunter.io integration." />
+    <MESSAGE value="Update `.env.example` and `config.py` to use HTTPS for portfolio URL, and add `requirements.txt` for dependencies." />
+    <MESSAGE value="Make Hunter.io optional; fallback to guessing jobs@domain if API key is not provided." />
+    <option name="LAST_COMMIT_MESSAGE" value="Make Hunter.io optional; fallback to guessing jobs@domain if API key is not provided." />
   </component>
 </project>
