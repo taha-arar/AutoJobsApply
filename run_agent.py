@@ -62,6 +62,7 @@ def main() -> None:
             company,
             job_url,
             to_email,
+            job.get("source", ""),
         )
         state.append_applied(
             job.get("source", ""),
